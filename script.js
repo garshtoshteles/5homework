@@ -1,35 +1,36 @@
 $(document).ready(function () {
   //
 
-  $(".saveBtn").click(function () {
-    var innerText = $(this).siblings(".description").val();
-    console.log(innerText);
-    var timeBlock = $(this).parent().data("time");
-    console.log(timeBlock);
-    localStorage.setItem(timeBlock, innerText);
-  });
-
   var currenthour;
   var j;
-  var daylabelvalue = moment().format("dddd, MMMM Do YYYY");
 
+  // display detailed day info below original header
+  var daylabelvalue = moment().format("dddd, MMMM Do YYYY");
   $("#currentDay").text(daylabelvalue);
   //
   for (let i = 9; i <= 17; i++) {
     //   create a new div for the timeblock
-    //
-    // add text box iwth .description class, <textarea> tag
-    //
-    // add .saveBtn
     var newblock = $("<div>");
-    j = moment().hour(i);
-    j = moment(j).format("h A");
+
+    // add timeblock labels
+    j = moment(moment().hour(i)).format("h A");
     newblock.append(j + " </br>");
+
     // assign a val attr to the div consisting of the index number
     newblock.attr({ "data-time": i, class: "time-block hour" });
-    // does making the div color responsive go here?
+
+    // add text box with .description class, <textarea> tag
+    var newtxtbox = $("<textarea>");
+    newtxtbox.attr({ class: "description" });
+    newblock.append(newtxtbox);
+
+    // add .saveBtn
+    var newsave = $("<button>");
+    newsave.attr({ class: "saveBtn fas fa-save" });
+    newsave.text("Save");
+    newblock.append(newsave);
+
     $(".container").append(newblock);
-    //
   }
   setInterval(function () {
     currenthour = parseInt(moment().format("kk")); // this needs to run in the interval
@@ -47,6 +48,14 @@ $(document).ready(function () {
       }
     }
   }, 1000);
+
+  $(".saveBtn").click(function () {
+    var innerText = $(this).siblings(".description").val();
+    console.log(innerText);
+    var timeBlock = $(this).parent().data("time");
+    console.log(timeBlock);
+    localStorage.setItem(timeBlock, innerText);
+  });
 
   $("[data-time=9] .description").val(localStorage.getItem("9"));
   $("[data-time=10] .description").val(localStorage.getItem("10"));
