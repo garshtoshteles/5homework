@@ -21,11 +21,14 @@ $(document).ready(function () {
     for (let i = 9; i <= 17; i++) {
       // this is the running check
       if (i < currenthour) {
-        // add a class to these to make them red
+        // adding class to make it grey
+        $("[data-time=" + i + "]").attr("class", "past");
       } else if (i == currenthour) {
-        // add a class to these to make it grey
+        // add a class to these to make it red
+        $("[data-time=" + i + "]").attr("class", "present");
       } else {
         // add a class to make these green
+        $("[data-time=" + i + "]").attr("class", "future");
       }
     }
   }, 1000);
