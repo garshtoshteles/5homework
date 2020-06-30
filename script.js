@@ -3,7 +3,8 @@ $(document).ready(function () {
   //
   //   need to get the current time
   console.log("moment().format() : " + moment().format("kk:mm:ss"));
-  var currenthour = parseInt(moment().format("kk"));
+  var currenthour;
+  console.log(currenthour);
   //
   for (let i = 9; i <= 17; i++) {
     //   create a new div for the timeblock
@@ -15,4 +16,17 @@ $(document).ready(function () {
     $(".container").append(newblock);
     //
   }
+  setInterval(function () {
+    currenthour = parseInt(moment().format("kk")); // this needs to run in the interval
+    for (let i = 9; i <= 17; i++) {
+      // this is the running check
+      if (i < currenthour) {
+        // add a class to these to make them red
+      } else if (i == currenthour) {
+        // add a class to these to make it grey
+      } else {
+        // add a class to make these green
+      }
+    }
+  }, 1000);
 });
